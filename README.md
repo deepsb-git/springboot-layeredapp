@@ -352,3 +352,43 @@ class BootDiLayerdappAutoconfigProj4ApplicationTests {
 G:\springboot_proj\springboot-layeredapp-master
 ($pwd).path
 G:\springboot_proj\springboot-layeredapp-master
+
+# If some error came due to db connection issues as well as SQLException then read below solution  
+
+### 1. Fix the Database URL
+
+Correct the database URL in `application.properties`:
+```properties
+spring.datasource.url=jdbc:mysql://localhost:3306/scott?useSSL=false&serverTimezone=UTC
+```
+
+### 2. Update C3P0 Version
+
+Update the C3P0 dependency in your `pom.xml`:
+```xml
+<dependency>
+    <groupId>com.mchange</groupId>
+    <artifactId>c3p0</artifactId>
+    <version>0.9.5.5</version>
+</dependency>
+```
+
+### 3. Additional Configuration Recommendations
+
+1. **Add Connection Testing Properties**:
+   ```properties
+   # Add to application.properties
+   spring.datasource.hikari.connection-test-query=SELECT 1
+   spring.datasource.hikari.connection-timeout=30000
+   ```
+
+2. **Verify MySQL Server**:
+   - Ensure MySQL is running on localhost:3306
+   - Verify the 'scott' database exists
+   - Confirm the user 'root' with password '6262' has access
+
+3. **Consider Using HikariCP Instead**:
+   Your application is configured to use both C3P0 (via `PersistenceConfig.java`) and HikariCP (via Spring Boot's auto-configuration). This dual configuration might cause conflicts. Consider standardizing on HikariCP, which is Spring Boot's default connection pool.
+
+By implementing these changes, your application should be able to successfully establish database connections.
+
