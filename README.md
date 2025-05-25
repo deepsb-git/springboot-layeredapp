@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # springboot-layeredapp
 # maven-switch case test report
 
@@ -392,3 +393,6 @@ Update the C3P0 dependency in your `pom.xml`:
 
 By implementing these changes, your application should be able to successfully establish database connections.
 
+=======
+# springboot-layeredapp
+>>>>>>> f8f7e64 (Commit with code correction accomplishment)
